@@ -1092,6 +1092,11 @@ class PackageGenerator:
         for rule in generation_info.keys():
             self._generate_by_rule(rule, package_strcuture, generation_info[rule])
 
+    def _create_py_typed_file(self, directory: str):
+        filename = "{}/py.typed".format(directory)
+        with open(filename, "w", encoding="utf-8", newline="\n") as file:
+            file.write("")
+
     def add_rule(self, rule: 'PackageGenerationRule'):
         self._rules.append(rule)
 
@@ -1101,3 +1106,4 @@ class PackageGenerator:
 
         self._create_empty_modules(analyzer.package_structure())
         self._generate(analyzer.package_structure(), analyzer.generation_info())
+        self._create_py_typed_file(self._config.output_dir)
