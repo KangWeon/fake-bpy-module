@@ -25,7 +25,7 @@ except IOError:
     long_description = ""
 
 # find python module.
-py_modules = list(set(glob.glob("*.py")) - {"setup.py"})
+py_modules = list(set(glob.glob("py.typed")) + set(glob.glob("*.py")) - {"setup.py"})
 py_modules = [os.path.splitext(m)[0] for m in py_modules]
 
 setup(
