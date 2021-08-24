@@ -32,6 +32,7 @@ def parse_options(config: ImportModuleTestConfig):
 def generate_tests(config: ImportModuleTestConfig) -> list:
     # Search modules to test.
     files = glob.glob("{}/*".format(config.modules_path), recursive=False)
+    module_names = []
     for f in files:
         basename = os.path.basename(f)
         if basename == "py.typed":
