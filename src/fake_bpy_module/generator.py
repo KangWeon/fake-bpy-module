@@ -1064,6 +1064,7 @@ class PackageGenerator:
                     if len(item.children()) >= 1:
                         dir_path = path + "/" + item.name
                         pathlib.Path(dir_path).mkdir(parents=True, exist_ok=True)
+                        self._create_py_typed_file(dir_path)
                         if dir_path == base_path:
                             continue
                         make_dir(dir_path, item)
@@ -1106,4 +1107,3 @@ class PackageGenerator:
 
         self._create_empty_modules(analyzer.package_structure())
         self._generate(analyzer.package_structure(), analyzer.generation_info())
-        self._create_py_typed_file(self._config.output_dir)

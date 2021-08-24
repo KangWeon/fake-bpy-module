@@ -788,8 +788,7 @@ class PackageGeneratorTest(common.FakeBpyModuleTestBase):
 
         shutil.rmtree(self.output_base_dir)
 
-    def __is_py_typed_exist(self):
-        filepath = "{}/py.typed".format(self.output_dir)
+    def __is_py_typed_exist(self, filepath: str) -> bool:
         if not os.path.isfile(filepath):
             return False
         return os.path.getsize(filepath) == 0
@@ -847,7 +846,7 @@ class PackageGeneratorTest(common.FakeBpyModuleTestBase):
                 actual_json = { "data": data }
             self.assertDictEqual(expect_json, actual_json)
 
-        self.assertTrue(self.__is_py_typed_exist())
+        self.assertFalse(self.__is_py_typed_exist("{}/py.typed".format(self.output_dir)))
 
     def test_multiple_rules(self):
         rule_1_rst_files = [
@@ -916,7 +915,10 @@ class PackageGeneratorTest(common.FakeBpyModuleTestBase):
                 actual_json = { "data": data }
             self.assertDictEqual(expect_json, actual_json)
 
-        self.assertTrue(self.__is_py_typed_exist())
+        self.assertFalse(self.__is_py_typed_exist("{}/py.typed".format(self.output_dir)))
+
+        py_typed_filepath = "{}/module_1/py.typed".format(self.output_dir)
+        self.assertTrue(self.__is_py_typed_exist(py_typed_filepath))
 
     def test_exceptional_rules(self):
         rule_rst_files = [
@@ -971,4 +973,4 @@ class PackageGeneratorTest(common.FakeBpyModuleTestBase):
                 actual_json = { "data": data }
             self.assertDictEqual(expect_json, actual_json)
 
-        self.assertTrue(self.__is_py_typed_exist())
+        self.assertFalse(self.__is_py_typed_exist("{}/py.typed".format(self.output_dir)))
